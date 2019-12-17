@@ -2,16 +2,17 @@
     class pluginHello extends Plugin {
         public function pageBegin() {
 			global $page;
+			//Replace Patterns with links
             $page->setField('content', $this->replaceLinks($page->content()));
         }
 		
 		private function replaceLinks($contentOfPage)
 		{
-			//DOC{Batch.pdf;Das ist der Name;Das ist die Beschreibung}
+			//Pattern to find
 			$regex = '/DOC{(?<FILENAME>[a-zA-Z0-9_.]+);(?<NAME>.*);(?<DESCRIPTION>.*)}/';
 			preg_match_all($regex, $contentOfPage, $matches, PREG_OFFSET_CAPTURE);
 			
-			//Alle Funde formatieren und ersetzen
+			//Replace all matches
 			for ($i = 0; $i <= count($matches[0]); $i++) {
 				$total = $matches[0][$i][0];
 				$filename = $matches["FILENAME"][$i][0];
