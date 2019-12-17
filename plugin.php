@@ -1,5 +1,27 @@
 <?php
     class pluginHello extends Plugin {
+		
+		private $loadOnController = array(
+			'new-content',
+			'edit-content'
+		);
+		
+		public function init()
+		{
+			//Create Documents Folder
+			mkdir(PATH_UPLOADS.'documents'.DS, 0755);
+		}
+		
+		public function adminBodyEnd()
+		{
+			// Load the plugin only in the controllers setted in $this->loadOnController
+			if (!in_array($GLOBALS['ADMIN_CONTROLLER'], $this->loadOnController)) {
+				return false;
+			}
+			$html = '<script src="'.$this->htmlPath().'js/OGFileManager.js"></script>';
+			return $html;
+		}
+		
         public function pageBegin() {
 			global $page;
 			//Replace Patterns with links

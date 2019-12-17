@@ -1,0 +1,2 @@
+//Add Button to Toolbar id=jsmediaManagerOpenModal data-target="#jsmediaManagerModal"
+$("#jseditorToolbarRight").prepend('<button type="button" class="btn btn-light" id="jsDocumentManagerOpenModal" data-toggle="modal" data-target="#jsDocumentManagerModal"><span class="fa fa-file"></span>FileManager</button>');
