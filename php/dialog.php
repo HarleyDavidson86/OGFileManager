@@ -1,6 +1,6 @@
 <?php
 // Preload the first 10 documents to not call via AJAX when the user open the first time the media manager
-$listOfFilesByPage = Filesystem::listFiles(OGFM_PATH_DOCUMENTS, '*', '*', false, 5);
+$listOfFilesByPage = Filesystem::listFiles(OGFM_PATH_DOCUMENTS_ABS, '*', '*', false, 5);
 $preLoadDocs = array();
 if (!empty($listOfFilesByPage[0])) {
 	foreach ($listOfFilesByPage[0] as $file) {

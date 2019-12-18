@@ -9,9 +9,10 @@
 		public function init()
 		{
 			//Create Documents Folder
-			mkdir(HTML_PATH_UPLOADS.'documents'.DS, 0755);
-			//define constant
-			define('OGFM_PATH_DOCUMENTS', HTML_PATH_UPLOADS.'documents'.DS);
+			mkdir(PATH_UPLOADS.'documents'.DS, 0755);
+			//define constants
+			define('OGFM_PATH_DOCUMENTS_REL', HTML_PATH_UPLOADS.'documents'.DS);
+			define('OGFM_PATH_DOCUMENTS_ABS', PATH_UPLOADS.'documents'.DS);
 		}
 		
 		public function adminBodyEnd()
@@ -72,7 +73,7 @@
 				$filename = $matches["FILENAME"][$i][0];
 				$name = $matches["NAME"][$i][0];
 				$description = $matches["DESCRIPTION"][$i][0];
-				$link  = '<form method="get" action="'.OGFM_PATH_DOCUMENTS.$filename.'">';
+				$link  = '<form method="get" action="'.OGFM_PATH_DOCUMENTS_REL.$filename.'">';
 				$link .= '<button type="submit" class="ogfm-button">Download</button> '.$name;
 				$link .= '</form>';
 				$contentOfPage = str_replace($total, $link, $contentOfPage);
