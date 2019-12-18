@@ -14,6 +14,7 @@
 		
 		public function adminBodyEnd()
 		{
+			global $L;
 			// Load the plugin only in the controllers setted in $this->loadOnController
 			if (!in_array($GLOBALS['ADMIN_CONTROLLER'], $this->loadOnController)) {
 				return false;
@@ -21,7 +22,9 @@
 			
 			include($this->phpPath().'php/dialog.php');
 			
-			$html = '<script src="'.$this->htmlPath().'js/OGFileManager.js"></script>';
+			$html  = '<script>';
+			$html .= '$("#jseditorToolbarRight").prepend(\'<button type="button" class="btn btn-light" id="jsDocumentManagerOpenModal" data-toggle="modal" data-target="#jsDocumentManagerModal"><span class="fa fa-file"></span>'.$L->g('FileManager').'</button>\')';
+			$html .= '</script>';
 			return $html;
 		}
 		
