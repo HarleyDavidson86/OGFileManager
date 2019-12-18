@@ -24,7 +24,7 @@ $numberOfPages = count($listOfFilesByPage);
 	-->
 		<h3 class="mt-2 mb-3"><i class="fa fa-file"></i><?php $L->p('FileManager'); ?></h3>
 
-		<div id="jsalertMedia" class="alert alert-warning d-none" role="alert"></div>
+		<div id="jsogfmtMedia" class="alert alert-warning d-none" role="alert"></div>
 
 		<!-- Form and Input file -->
 		<form name="bluditFormUpload" id="jsOGFormUpload" enctype="multipart/form-data">
@@ -69,15 +69,29 @@ $numberOfPages = count($listOfFilesByPage);
 
 <?php
 echo 'var preLoadDocs = '.json_encode($preLoadDocs).';';
+echo 'var PATH_OGFM = "'.HTML_PATH_PLUGINS.'OGFileManager'.DS.'";';
 ?>
 
 $(document).ready(function() {
 	// Display the files preloaded for the first time
 	displayDocs(preLoadDocs);
+	
+	// Select image event
+	$("#jsdocuments").on("change", function(e) {
+		uploadDocuments();
+	});
 });
 
 function closeFileManager() {
 	$('#jsDocumentManagerModal').modal('hide');
+}
+
+function showMediaAlert(message) {
+	$("#jsogfmtMedia").html(message).removeClass('d-none');
+}
+
+function hideMediaAlert() {
+	$("#jsogfmtMedia").addClass('d-none');
 }
 
 // Remove all files from the table
@@ -117,6 +131,60 @@ function displayDocs(files) {
 	if (files.length == 0) {
 		$('#jsOGDocsTable').html("<p><?php $L->p('There are no documents'); ?></p>");
 	}
+}
+
+function uploadDocuments() {
+	// Remove current alerts
+	hideMediaAlert();
+
+	var images = $("#jsdocuments")[0].files;
+	for (var i=0; i < images.length; i++) {
+
+		// Check file size and compare with PHP upload_max_filesize
+		if (images[i].size > UPLOAD_MAX_FILESIZE) {
+			showMediaAlert("<?php echo $L->g('Maximum load file size allowed:').' '.ini_get('upload_max_filesize') ?>");
+			return false;
+		}
+	};
+
+	// Clean progress bar
+	$("#jsogfmProgressBar").removeClass().addClass("progress-bar bg-primary");
+	$("#jsogfmProgressBar").width("0");
+
+	// Data to send via AJAX
+	var formData = new FormData($("#jsOGFormUpload")[0]);
+	formData.append("uuid", "<?php echo PAGE_IMAGES_KEY ?>");
+	formData.append("tokenCSRF", tokenCSRF);
+	console.log(PATH_OGFM+"ajax/upload-documents.php");
+	$.ajax({
+		url: PATH_OGFM+"ajax/upload-documents.php",
+		type: "POST",
+		data: formData,
+		cache: false,
+		contentType: false,
+		processData: false,
+		xhr: function() {
+			var xhr = $.ajaxSettings.xhr();
+			if (xhr.upload) {
+				xhr.upload.addEventListener("progress", function(e) {
+					if (e.lengthComputable) {
+						var percentComplete = (e.loaded / e.total)*100;
+						$("#jsogfmProgressBar").width(percentComplete+"%");
+					}
+				}, false);
+			}
+			return xhr;
+		}
+	}).done(function(data) {
+		if (data.status==0) {
+			$("#jsogfmProgressBar").removeClass("bg-primary").addClass("bg-success");
+			// Get the files for the first page, this include the files uploaded
+			getFiles(1);
+		} else {
+			$("#jsogfmProgressBar").removeClass("bg-primary").addClass("bg-danger");
+			showMediaAlert(data.message);
+		}
+	});
 }
 
 </script>
