@@ -99,14 +99,13 @@ function displayDocs(files) {
 		$.each(files, function(key, filename) {
 			//Maybe show Icons for different extensions?
 			var thumbnail = "fa fa-file";	
-			var image = "<?php echo OGFM_PATH_DOCUMENTS; ?>"+filename;
 
 			tableRow = '<tr id="js'+filename+'">'+
 					'<td style="width:80px"><span class="img-thumbnail '+thumbnail+'" style="width: 50px; height: 50px; font-size: 30px; text-align: center;"><\/td>'+
 					'<td class="information">'+
 						'<div class="text-primary pb-2">'+filename+'<\/div>'+
 						'<div>'+
-							'<a href="#" class="mr-3 text-secondary" onClick="editorInsertDocument(\''+image+'\'); closeFileManager();"><i class="fa fa-plus"></i><?php $L->p('Insert') ?><\/a>'+
+							'<a href="#" class="mr-3 text-secondary" onClick="editorInsertDocument(\''+filename+'\'); closeFileManager();"><i class="fa fa-plus"></i><?php $L->p('Insert') ?><\/a>'+
 							'<a href="#" class="float-right text-danger" onClick="deleteDocument(\''+filename+'\')"><i class="fa fa-trash-o"></i><?php $L->p('Delete') ?><\/a>'+
 						'<\/div>'+
 					'<\/td>'+

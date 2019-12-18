@@ -30,17 +30,17 @@
 			$html .= '$(document).ready(function() {'.PHP_EOL;
 			$html .= '    if (typeof editorInsertDocument != "function") {'.PHP_EOL;
 			$html .= '        window.editorInsertDocument = function(filename){'.PHP_EOL;
-			$html .= '        console.log("Inhalt: "+filename);'.PHP_EOL;
+			$html .= '        var placeholder = "DOC{"+filename+";'.$L->g("Insert name of file").';'.$L->g("Insert description").'}";'.PHP_EOL;
 			//No Editor-Plugin selected
-			$html .= '            $("#jseditor").val($(\'#jseditor\').val()+\'<img src="\'+filename+\'.jpg" alt="">\');'.PHP_EOL;
+			$html .= '            $("#jseditor").val($(\'#jseditor\').val()+placeholder);'.PHP_EOL;
 			//TinyMCE as editor selected
 			$html .= '            if (typeof tinymce !== \'undefined\') {'.PHP_EOL;
-			$html .= '                tinymce.activeEditor.insertContent(filename);'.PHP_EOL;
+			$html .= '                tinymce.activeEditor.insertContent(placeholder);'.PHP_EOL;
 			$html .= '            };'.PHP_EOL;
 			//Easy MDE as plugin selected
 			$html .= '            if (typeof easymde !== \'undefined\') {'.PHP_EOL;
 			$html .= '                var text = easymde.value();'.PHP_EOL;
-			$html .= '                easymde.value(text + "![$langImage]("+filename+")" + "\\n");'.PHP_EOL;
+			$html .= '                easymde.value(text + placeholder + "\\n");'.PHP_EOL;
 			$html .= '                easymde.codemirror.refresh();'.PHP_EOL;
 			$html .= '            };'.PHP_EOL;
 			$html .= '        };'.PHP_EOL;
