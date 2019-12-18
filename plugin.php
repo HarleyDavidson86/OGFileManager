@@ -18,6 +18,9 @@
 			if (!in_array($GLOBALS['ADMIN_CONTROLLER'], $this->loadOnController)) {
 				return false;
 			}
+			
+			include($this->phpPath().'php/dialog.php');
+			
 			$html = '<script src="'.$this->htmlPath().'js/OGFileManager.js"></script>';
 			return $html;
 		}
