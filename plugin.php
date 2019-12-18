@@ -9,9 +9,9 @@
 		public function init()
 		{
 			//Create Documents Folder
-			mkdir(PATH_UPLOADS.'documents'.DS, 0755);
+			mkdir(HTML_PATH_UPLOADS.'documents'.DS, 0755);
 			//define constant
-			define('OGFM_PATH_DOCUMENTS', PATH_UPLOADS.'documents'.DS);
+			define('OGFM_PATH_DOCUMENTS', HTML_PATH_UPLOADS.'documents'.DS);
 		}
 		
 		public function adminBodyEnd()
