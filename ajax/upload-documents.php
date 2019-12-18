@@ -12,10 +12,9 @@ header('Content-Type: application/json');
 // ----------------------------------------------------------------------------
 $uuid = empty($_POST['uuid']) ? false : $_POST['uuid'];
 // ----------------------------------------------------------------------------
-error_log($uuid);
 // Check path traversal on $uuid
 if ($uuid) {
-	if (Text::stringContains($uuid, DS, false)) {
+	if (mb_stripos($uuid, "/", 0, "UTF-8")) {
 		$message = 'Path traversal detected.';
 		Log::set($message, LOG_TYPE_ERROR);
 		ajaxResponse(1, $message);
@@ -23,6 +22,7 @@ if ($uuid) {
 }
 
 $images = array();
+
 foreach ($_FILES['documents']['name'] as $uuid=>$filename) {
 	// Check for errors
 	if ($_FILES['documents']['error'][$uuid] != 0) {
@@ -35,34 +35,35 @@ foreach ($_FILES['documents']['name'] as $uuid=>$filename) {
 	$filename = urldecode($filename);
 
 	// Check path traversal on $filename
-	if (Text::stringContains($filename, DS, false)) {
+        if (mb_stripos($filename, "/", 0, "UTF-8")) {
+            
 		$message = 'Path traversal detected.';
 		Log::set($message, LOG_TYPE_ERROR);
 		ajaxResponse(1, $message);
 	}
 
 	// Move from PHP tmp file to Bludit tmp directory
-	Filesystem::mv($_FILES['documents']['tmp_name'][$uuid], PATH_TMP.$filename);
+	//Filesystem::mv($_FILES['documents']['tmp_name'][$uuid], PATH_TMP.$filename);
 
 	// Transform the image and generate the thumbnail
-	$image = transformImage(PATH_TMP.$filename, $imageDirectory, $thumbnailDirectory);
+	//$image = transformImage(PATH_TMP.$filename, $imageDirectory, $thumbnailDirectory);
 
 	// Delete temporary file
-	Filesystem::rmfile(PATH_TMP.$filename);
+	//Filesystem::rmfile(PATH_TMP.$filename);
 
-	if ($image) {
-		chmod($image, 0644);
-		$filename = Filesystem::filename($image);
-		array_push($images, $filename);
-	} else {
-		$message = 'Error after transformImage() function.';
-		Log::set($message, LOG_TYPE_ERROR);
-		ajaxResponse(1, $message);
-	}
+//	if ($image) {
+//		chmod($image, 0644);
+//		$filename = Filesystem::filename($image);
+//		array_push($images, $filename);
+//	} else {
+//		$message = 'Error after transformImage() function.';
+//		Log::set($message, LOG_TYPE_ERROR);
+//		ajaxResponse(1, $message);
+//	}
 }
 
-ajaxResponse(0, 'Images uploaded.', array(
-	'images'=>$images
-));
+//ajaxResponse(0, 'Images uploaded.', array(
+//	'images'=>$images
+//));
 
 ?>
