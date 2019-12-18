@@ -57,6 +57,9 @@
             $page->setField('content', $this->replaceLinks($page->content()));
         }
 		
+		/**
+		* Replaces all placeholders with configured download button
+		*/
 		private function replaceLinks($contentOfPage)
 		{
 			//Pattern to find
@@ -69,7 +72,9 @@
 				$filename = $matches["FILENAME"][$i][0];
 				$name = $matches["NAME"][$i][0];
 				$description = $matches["DESCRIPTION"][$i][0];
-				$link = '<a href="'.OGFM_PATH_DOCUMENTS.$filename.'">'.$name.'</a>';
+				$link  = '<form method="get" action="'.OGFM_PATH_DOCUMENTS.$filename.'">';
+				$link .= '<button type="submit" class="ogfm-button">Download</button> '.$name;
+				$link .= '</form>';
 				$contentOfPage = str_replace($total, $link, $contentOfPage);
 			}
 			return $contentOfPage;
