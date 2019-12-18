@@ -76,6 +76,10 @@ $(document).ready(function() {
 	displayDocs(preLoadDocs);
 });
 
+function closeFileManager() {
+	$('#jsDocumentManagerModal').modal('hide');
+}
+
 // Remove all files from the table
 function cleanDocsTable() {
 	$('#jsOGDocsTable').empty();
@@ -102,9 +106,8 @@ function displayDocs(files) {
 					'<td class="information">'+
 						'<div class="text-primary pb-2">'+filename+'<\/div>'+
 						'<div>'+
-							'<a href="#" class="mr-3 text-secondary" onClick="editorInsertMedia(\''+image+'\'); closeMediaManager();"><i class="fa fa-plus"></i><?php $L->p('Insert') ?><\/a>'+
-							'<a href="#" class="text-secondary" onClick="setCoverImage(\''+filename+'\'); closeMediaManager();"><i class="fa fa-square-o"></i><?php $L->p('Set as cover image') ?><\/button>'+
-							'<a href="#" class="float-right text-danger" onClick="deleteMedia(\''+filename+'\')"><i class="fa fa-trash-o"></i><?php $L->p('Delete') ?><\/a>'+
+							'<a href="#" class="mr-3 text-secondary" onClick="editorInsertDocument(\''+image+'\'); closeFileManager();"><i class="fa fa-plus"></i><?php $L->p('Insert') ?><\/a>'+
+							'<a href="#" class="float-right text-danger" onClick="deleteDocument(\''+filename+'\')"><i class="fa fa-trash-o"></i><?php $L->p('Delete') ?><\/a>'+
 						'<\/div>'+
 					'<\/td>'+
 				'<\/tr>';
@@ -113,7 +116,7 @@ function displayDocs(files) {
 	}
 
 	if (files.length == 0) {
-		$('#jsOGDocsTable').html("<p><?php (IMAGE_RESTRICT ? $L->p('There are no images for the page') : $L->p('There are no images')) ?></p>");
+		$('#jsOGDocsTable').html("<p><?php $L->p('There are no documents'); ?></p>");
 	}
 }
 

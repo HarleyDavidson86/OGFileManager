@@ -25,10 +25,29 @@
 			
 			include($this->phpPath().'php/dialog.php');
 			
-			$html  = '<script>';
-			$html .= '$("#jseditorToolbarRight").prepend(\'<button type="button" class="btn btn-light" id="jsDocumentManagerOpenModal" data-toggle="modal" data-target="#jsDocumentManagerModal"><span class="fa fa-file"></span>'.$L->g('FileManager').'</button>\')';
-			$html .= '</script>';
-			echo '<!-- OGFileManager End -->';
+			$html .= '<script>';
+			$html .= '$("#jseditorToolbarRight").prepend(\'<button type="button" class="btn btn-light" id="jsDocumentManagerOpenModal" data-toggle="modal" data-target="#jsDocumentManagerModal"><span class="fa fa-file"></span>'.$L->g('FileManager').'</button>\');'.PHP_EOL;
+			$html .= '$(document).ready(function() {'.PHP_EOL;
+			$html .= '    if (typeof editorInsertDocument != "function") {'.PHP_EOL;
+			$html .= '        window.editorInsertDocument = function(filename){'.PHP_EOL;
+			$html .= '        console.log("Inhalt: "+filename);'.PHP_EOL;
+			//No Editor-Plugin selected
+			$html .= '            $("#jseditor").val($(\'#jseditor\').val()+\'<img src="\'+filename+\'.jpg" alt="">\');'.PHP_EOL;
+			//TinyMCE as editor selected
+			$html .= '            if (typeof tinymce !== \'undefined\') {'.PHP_EOL;
+			$html .= '                tinymce.activeEditor.insertContent(filename);'.PHP_EOL;
+			$html .= '            };'.PHP_EOL;
+			//Easy MDE as plugin selected
+			$html .= '            if (typeof easymde !== \'undefined\') {'.PHP_EOL;
+			$html .= '                var text = easymde.value();'.PHP_EOL;
+			$html .= '                easymde.value(text + "![$langImage]("+filename+")" + "\\n");'.PHP_EOL;
+			$html .= '                easymde.codemirror.refresh();'.PHP_EOL;
+			$html .= '            };'.PHP_EOL;
+			$html .= '        };'.PHP_EOL;
+			$html .= '    }'.PHP_EOL;
+			$html .= '});'.PHP_EOL;
+			$html .= '</script>'.PHP_EOL;
+			$html .= '<!-- OGFileManager End -->'.PHP_EOL;
 			return $html;
 		}
 		
