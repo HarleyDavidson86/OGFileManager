@@ -10,10 +10,13 @@
 		{
 			//Create Documents Folder
 			mkdir(PATH_UPLOADS.'documents'.DS, 0755);
+			//define constant
+			define('OGFM_PATH_DOCUMENTS', PATH_UPLOADS.'documents'.DS);
 		}
 		
 		public function adminBodyEnd()
 		{
+			echo '<!-- OGFileManager Start -->';
 			global $L;
 			// Load the plugin only in the controllers setted in $this->loadOnController
 			if (!in_array($GLOBALS['ADMIN_CONTROLLER'], $this->loadOnController)) {
@@ -25,6 +28,7 @@
 			$html  = '<script>';
 			$html .= '$("#jseditorToolbarRight").prepend(\'<button type="button" class="btn btn-light" id="jsDocumentManagerOpenModal" data-toggle="modal" data-target="#jsDocumentManagerModal"><span class="fa fa-file"></span>'.$L->g('FileManager').'</button>\')';
 			$html .= '</script>';
+			echo '<!-- OGFileManager End -->';
 			return $html;
 		}
 		
@@ -46,7 +50,7 @@
 				$filename = $matches["FILENAME"][$i][0];
 				$name = $matches["NAME"][$i][0];
 				$description = $matches["DESCRIPTION"][$i][0];
-				$link = '<a href="'.HTML_PATH_UPLOADS.'documents'.DS.$filename.'">'.$name.'</a>';
+				$link = '<a href="'.OGFM_PATH_DOCUMENTS.$filename.'">'.$name.'</a>';
 				$contentOfPage = str_replace($total, $link, $contentOfPage);
 			}
 			return $contentOfPage;
