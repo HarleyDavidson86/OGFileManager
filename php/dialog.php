@@ -157,7 +157,6 @@ function uploadDocuments() {
 	formData.append("uuid", "<?php echo PAGE_IMAGES_KEY ?>");
 	formData.append("tokenCSRF", tokenCSRF);
 	formData.append("destPath", OGFM_PATH_DOCUMENTS_ABS);
-	console.log(PATH_OGFM+"ajax/upload-documents.php");
 	$.ajax({
 		url: PATH_OGFM+"ajax/upload-documents.php",
 		type: "POST",
@@ -178,7 +177,8 @@ function uploadDocuments() {
 			return xhr;
 		}
 	}).done(function(data) {
-		if (data.status==0) {
+            console.log(data)
+		if (data.status === 0) {
 			$("#jsogfmProgressBar").removeClass("bg-primary").addClass("bg-success");
 			// Get the files for the first page, this include the files uploaded
 			getFiles(1);

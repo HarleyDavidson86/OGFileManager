@@ -21,17 +21,23 @@ if ($uuid) {
 	}
 }
 
+$documents = array();
 $destPath = $_POST['destPath'];
-error_log("DESTPATH: ".$destPath);
 foreach ($_FILES["documents"]["error"] as $uuid => $filename) {
     if ($filename == UPLOAD_ERR_OK) {
         $tmp_name = $_FILES["documents"]["tmp_name"][$uuid];
         // basename() may prevent filesystem traversal attacks;
         // further validation/sanitation of the filename may be appropriate
         $name = basename($_FILES["documents"]["name"][$uuid]);
-        error_log($tmp_name." ".$destPath.$name);
-        move_uploaded_file($tmp_name, "$destPath$name");
+        move_uploaded_file($tmp_name, $destPath.$name);
+        
+        chmod($destPath.$name, 0644);
+        array_push($documents, $destPath.$name);
     }
 }
+
+$default = array('status'=>0, 'message'=>'Documents uploaded.');
+$output = array_merge($default, array('documents'=>$documents));
+exit (json_encode($output));
 
 ?>
