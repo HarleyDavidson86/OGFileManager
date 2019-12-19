@@ -3,7 +3,8 @@ header('Content-Type: application/json');
 /*
 | Upload an document to a particular page
 |
-| @_POST['uuid']	string	Page uuid
+| @_POST['uuid']	string	Page 
+| @_POST['uuid']	string	abs path to documents folder
 |
 | @return		array
 */

@@ -1,6 +1,6 @@
 <?php
 // Preload the first 10 documents to not call via AJAX when the user open the first time the media manager
-$listOfFilesByPage = Filesystem::listFiles(OGFM_PATH_DOCUMENTS_ABS, '*', '*', false, 5);
+$listOfFilesByPage = Filesystem::listFiles(OGFM_PATH_DOCUMENTS_ABS, '*', '*', true, 5);
 $preLoadDocs = array();
 if (!empty($listOfFilesByPage[0])) {
 	foreach ($listOfFilesByPage[0] as $file) {
@@ -132,6 +132,24 @@ function displayDocs(files) {
 	if (files.length == 0) {
 		$('#jsOGDocsTable').html("<p><?php $L->p('There are no documents'); ?></p>");
 	}
+}
+
+// Get the list of files via AJAX, filter by the page number
+function getFiles(pageNumber) {
+	$.post(PATH_OGFM+"ajax/list-documents.php",
+		{ 	tokenCSRF: tokenCSRF,
+			pageNumber: pageNumber,
+			uuid: "<?php echo PAGE_IMAGES_KEY ?>",
+			path: OGFM_PATH_DOCUMENTS_ABS
+		},
+		function(data) { // success function
+			if (data.status==0) {
+				displayDocs(data.files);
+			} else {
+				console.log(data.message);
+			}
+		}
+	);
 }
 
 function uploadDocuments() {
