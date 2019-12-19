@@ -24,5 +24,4 @@ This plugin will replace it with:
 At this time, the description is not used.
 
 The following features are planned:
-- Uploadtool so that you can manage uploaded files over the admin-panel
 - Customizable template for a nice presentation of link (download-button for example)
