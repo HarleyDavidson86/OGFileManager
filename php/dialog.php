@@ -152,6 +152,23 @@ function getFiles(pageNumber) {
 	);
 }
 
+function deleteDocument(filename) {
+	$.post(PATH_OGFM+"ajax/delete-document.php",
+		{ 	tokenCSRF: tokenCSRF,
+			filename: filename,
+                        path: OGFM_PATH_DOCUMENTS_ABS,
+			uuid: "<?php echo PAGE_IMAGES_KEY; ?>"
+		},
+		function(data) { // success function
+			if (data.status==0) {
+				getFiles(1);
+			} else {
+				console.log(data.message);
+			}
+		}
+	);
+}
+
 function uploadDocuments() {
 	// Remove current alerts
 	hideMediaAlert();
