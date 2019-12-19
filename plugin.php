@@ -16,7 +16,7 @@
 		}
 		
 		public function adminBodyEnd()
-		{
+		{			
 			echo '<!-- OGFileManager Start -->';
 			global $L;
 			// Load the plugin only in the controllers setted in $this->loadOnController

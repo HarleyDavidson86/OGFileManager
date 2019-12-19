@@ -21,49 +21,17 @@ if ($uuid) {
 	}
 }
 
-$images = array();
-
-foreach ($_FILES['documents']['name'] as $uuid=>$filename) {
-	// Check for errors
-	if ($_FILES['documents']['error'][$uuid] != 0) {
-		$message = $L->g('Maximum load file size allowed:').' '.ini_get('upload_max_filesize');
-		Log::set($message, LOG_TYPE_ERROR);
-		ajaxResponse(1, $message);
-	}
-
-	// Convert URL characters such as spaces or quotes to characters
-	$filename = urldecode($filename);
-
-	// Check path traversal on $filename
-        if (mb_stripos($filename, "/", 0, "UTF-8")) {
-            
-		$message = 'Path traversal detected.';
-		Log::set($message, LOG_TYPE_ERROR);
-		ajaxResponse(1, $message);
-	}
-
-	// Move from PHP tmp file to Bludit tmp directory
-	//Filesystem::mv($_FILES['documents']['tmp_name'][$uuid], PATH_TMP.$filename);
-
-	// Transform the image and generate the thumbnail
-	//$image = transformImage(PATH_TMP.$filename, $imageDirectory, $thumbnailDirectory);
-
-	// Delete temporary file
-	//Filesystem::rmfile(PATH_TMP.$filename);
-
-//	if ($image) {
-//		chmod($image, 0644);
-//		$filename = Filesystem::filename($image);
-//		array_push($images, $filename);
-//	} else {
-//		$message = 'Error after transformImage() function.';
-//		Log::set($message, LOG_TYPE_ERROR);
-//		ajaxResponse(1, $message);
-//	}
+$destPath = $_POST['destPath'];
+error_log("DESTPATH: ".$destPath);
+foreach ($_FILES["documents"]["error"] as $uuid => $filename) {
+    if ($filename == UPLOAD_ERR_OK) {
+        $tmp_name = $_FILES["documents"]["tmp_name"][$uuid];
+        // basename() may prevent filesystem traversal attacks;
+        // further validation/sanitation of the filename may be appropriate
+        $name = basename($_FILES["documents"]["name"][$uuid]);
+        error_log($tmp_name." ".$destPath.$name);
+        move_uploaded_file($tmp_name, "$destPath$name");
+    }
 }
-
-//ajaxResponse(0, 'Images uploaded.', array(
-//	'images'=>$images
-//));
 
 ?>

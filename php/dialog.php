@@ -70,6 +70,7 @@ $numberOfPages = count($listOfFilesByPage);
 <?php
 echo 'var preLoadDocs = '.json_encode($preLoadDocs).';';
 echo 'var PATH_OGFM = "'.HTML_PATH_PLUGINS.'OGFileManager'.DS.'";';
+echo 'var OGFM_PATH_DOCUMENTS_ABS = "'.OGFM_PATH_DOCUMENTS_ABS.'";';
 ?>
 
 $(document).ready(function() {
@@ -155,6 +156,7 @@ function uploadDocuments() {
 	var formData = new FormData($("#jsOGFormUpload")[0]);
 	formData.append("uuid", "<?php echo PAGE_IMAGES_KEY ?>");
 	formData.append("tokenCSRF", tokenCSRF);
+	formData.append("destPath", OGFM_PATH_DOCUMENTS_ABS);
 	console.log(PATH_OGFM+"ajax/upload-documents.php");
 	$.ajax({
 		url: PATH_OGFM+"ajax/upload-documents.php",
