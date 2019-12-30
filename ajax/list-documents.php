@@ -1,38 +1,8 @@
 <?php 
 header('Content-Type: application/json');
 
-class Filesystem {
-
-    // Returns an array with the list of files with the absolute path
-    // $sortByDate = TRUE, the first file is the newer file
-    // $chunk = amount of chunks, FALSE if you don't want to chunk
-    public static function listFiles($path, $regex='*', $extension='*', $sortByDate=false, $chunk=false)
-    {
-        $files = glob($path.$regex.'.'.$extension);
-
-        if (empty($files)) {
-                return array();
-        }
-
-        if ($sortByDate) {
-                usort($files,
-                        function($a, $b) {
-                                return filemtime($b) - filemtime($a);
-                        }
-                );
-        }
-
-        // Split the list of files into chunks
-        // http://php.net/manual/en/function.array-chunk.php
-        if ($chunk) {
-                return array_chunk($files, $chunk);
-        }
-        return $files;
-    }
-}
-
 /*
-| Returns a list of docuemnts from a particular page
+| Returns a list of documents from a particular page
 |
 | @_POST['pageNumber']	int	Page number for the paginator
 | @_POST['path']	string	abs path to docs folder
@@ -51,9 +21,11 @@ $path = empty($_POST['path']) ? false : $_POST['path'];
 $uuid = empty($_POST['uuid']) ? false : $_POST['uuid'];
 // ----------------------------------------------------------------------------
 
+include '../php/OGFMHelper.php';
+
 // Get all files from the directory $path, also split the array by numberOfItems
 // The function listFiles split in chunks
-$listOfFilesByPage = Filesystem::listFiles($path, '*', '*', true, 5);
+$listOfFilesByPage = OGFMHelper::listFiles($path, '*', '*', true, 5);
 
 // Check if the page number exists in the chunks
 if (isset($listOfFilesByPage[$pageNumber])) {

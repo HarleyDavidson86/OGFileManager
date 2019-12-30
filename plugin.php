@@ -63,8 +63,10 @@
 		*/
 		private function replaceLinks($contentOfPage)
 		{
+                    include 'php/LinkTemplateHelper.php';
+                    
 			//Pattern to find
-			$regex = '/DOC{(?<FILENAME>[a-zA-Z0-9_.]+);(?<NAME>.*);(?<DESCRIPTION>.*)}/';
+			$regex = '/DOC{(?<FILENAME>[a-zA-Z0-9_.-]+);(?<NAME>.*);(?<DESCRIPTION>.*)}/';
 			preg_match_all($regex, $contentOfPage, $matches, PREG_OFFSET_CAPTURE);
 			
 			//Replace all matches
@@ -73,9 +75,7 @@
 				$filename = $matches["FILENAME"][$i][0];
 				$name = $matches["NAME"][$i][0];
 				$description = $matches["DESCRIPTION"][$i][0];
-				$link  = '<form method="get" action="'.OGFM_PATH_DOCUMENTS_REL.$filename.'">';
-				$link .= '<button type="submit" class="ogfm-button">Download</button> '.$name;
-				$link .= '</form>';
+				$link  = LinkTemplateHelper::buildLink(OGFM_PATH_DOCUMENTS_REL.$filename, $name, $description);
 				$contentOfPage = str_replace($total, $link, $contentOfPage);
 			}
 			return $contentOfPage;
