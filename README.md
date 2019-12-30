@@ -19,9 +19,11 @@ DOC{Instructions.pdf;Manual;This is the manual for some really cool machine.}
 
 This plugin will replace it with:
 ```
-<a href="http://itwerkstatt.omdriebigs-gspann.de/bl-content/uploads/documents/Instructions.pdf">Manual</a>
+<div class="ogfm-wrapper">
+  <a class="ogfm-link" href="http://itwerkstatt.omdriebigs-gspann.de/bl-content/uploads/documents/Instructions.pdf">Manual</a>
+  <p class="ogfm-description">The Manual of this tool v1</p>
+</div>
 ```
-At this time, the description is not used.
 
-The following features are planned:
-- Customizable template for a nice presentation of link (download-button for example)
+This link can be customized by a css-file called "ogfm-style.css" in your theme-folder.
+If there is no file with this name, the plugin will use the default one in the plugin-folder.

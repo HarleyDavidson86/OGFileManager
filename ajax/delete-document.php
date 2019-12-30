@@ -1,14 +1,15 @@
-<?php 
+<?php
+
 header('Content-Type: application/json');
 
 /*
-| Delete an document
-|
-| @_POST['filename']	string	Name of the file to delete
-| @_POST['uuid']	string	Page UUID
-|
-| @return	array
-*/
+  | Delete an document
+  |
+  | @_POST['filename']	string	Name of the file to delete
+  | @_POST['uuid']	string	Page UUID
+  |
+  | @return	array
+ */
 
 // $_POST
 // ----------------------------------------------------------------------------
@@ -20,11 +21,11 @@ $uuid = empty($_POST['uuid']) ? false : $_POST['uuid'];
 include '../php/OGFMHelper.php';
 
 // Delete document
-if (OGFMHelper::pathFile($path.$filename)) {
-	unlink($path.$filename);
+if (OGFMHelper::pathFile($path . $filename)) {
+    unlink($path . $filename);
 }
 
-$default = array('status'=>0, 'message'=>'Document deleted.');
+$default = array('status' => 0, 'message' => 'Document deleted.');
 $output = array_merge($default, array());
-exit (json_encode($output));
+exit(json_encode($output));
 ?>
