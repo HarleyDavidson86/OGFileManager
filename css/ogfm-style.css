@@ -1,0 +1,19 @@
+/* 
+    Created on : 30.12.2019, 17:56:14
+    Author     : dominik
+*/
+.ogfm-wrapper {
+    border: 1px solid #cccccc;
+    margin: 5px;
+    padding: 3px 5px;
+}
+
+.ogfm-link {
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.ogfm-description {
+    font-size: small;
+}
+
