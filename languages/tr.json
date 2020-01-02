@@ -1,0 +1,12 @@
+{
+    "plugin-data":
+    {
+        "name": "OG FileManager",
+        "description": "İçerikte indirilebilir dosyaları görüntüler"
+    },
+	"choose-files-to-upload" : "Yüklenecek dosyaları seçin",
+	"filemanager" : "FileManager",
+	"there-are-no-documents" : "Hiç belge yok",
+	"insert-name-of-file" : "Dosyanın adını girin",
+	"insert-description" : "Açıklama ekleyin"
+}
