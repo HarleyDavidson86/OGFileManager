@@ -66,7 +66,10 @@ class pluginHello extends Plugin {
     public function pageBegin() {
         global $page;
         //Replace Patterns with links
-        $page->setField('content', $this->replaceLinks($page->content()));
+        //Check if we have a page with content
+        if ($WHERE_AM_I==='page') {
+            $page->setField('content', $this->replaceLinks($page->content()));
+        }
     }
 
     /**
