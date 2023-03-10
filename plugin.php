@@ -1,6 +1,6 @@
 <?php
 
-class pluginHello extends Plugin {
+class pluginOGFileManager extends Plugin {
 
     private $loadOnController = array(
         'new-content',
