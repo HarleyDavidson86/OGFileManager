@@ -67,7 +67,7 @@ class pluginHello extends Plugin {
         global $page;
         //Replace Patterns with links
         //Check if we have a page with content
-        if ($WHERE_AM_I==='page') {
+        if ($GLOBALS['WHERE_AM_I'] === 'page') {
             $page->setField('content', $this->replaceLinks($page->content()));
         }
     }
