@@ -31,6 +31,8 @@ foreach ($_FILES["documents"]["error"] as $uuid => $filename) {
         // basename() may prevent filesystem traversal attacks;
         // further validation/sanitation of the filename may be appropriate
         $name = basename($_FILES["documents"]["name"][$uuid]);
+        //Replace all characters except numerics, alphanumberics and dots with underscore
+        $name = preg_replace("/[^0-9a-zA-Z.]/","_",$name);
         move_uploaded_file($tmp_name, $destPath . $name);
 
         chmod($destPath . $name, 0644);
