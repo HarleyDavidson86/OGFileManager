@@ -3,8 +3,7 @@ FileManager plugin for bludit to provide downloadable content to the user
 
 ## Setup
 After activating this plugin it will create a folder in /bl-content/uploads called "documents".
-In this folder you can put documents via FTP (at this time).
-There is an upload-feature planned in admin-panel.
+You will find a button "FileManager" when editing a page to upload files.
 
 ## Set a link in content
 This plugin is searching the following pattern in your pages content and replace it with a clickable link:
